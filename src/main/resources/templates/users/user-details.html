@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 상세 정보</title>
+</head>
+<body>
+
+<div class="container">
+    <h2>사용자 상세 정보</h2>
+
+    <div>
+        <label><strong>ID:</strong></label>
+        <span th:text="${user.userId}"></span>
+    </div>
+    <div>
+        <label><strong>이름:</strong></label>
+        <span th:text="${user.name}"></span>
+    </div>
+    <div>
+        <label><strong>휴대폰번호:</strong></label>
+        <span th:text="${user.phoneNumber}"></span>
+    </div>
+    <div>
+        <label><strong>이메일:</strong></label>
+        <span th:text="${user.email}"></span>
+    </div>
+
+    <br/>
+
+    <a th:href="@{/users/{id}/edit(id=${user.id})}">수정</a>
+    <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post" style="display:inline;" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+        <button type="submit">삭제</button>
+    </form>
+    <a href="/users">목록으로</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 목록</title>
+</head>
+<body>
+
+<div class="container">
+    <h2>사용자 목록</h2>
+    <div>
+        <a href="/users/new">사용자 등록</a>
+    </div>
+    <br>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>이름</th>
+            <th>휴대폰번호</th>
+            <th>이메일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td>
+                <a th:href="@{/users/{id}(id=${user.id})}" th:text="${user.userId}"></a>
+            </td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <!-- Pagination -->
+    <nav th:if="${users.totalPages > 0}" aria-label="Page navigation">
+        <ul class="pagination">
+            <li th:if="${users.hasPrevious()}">
+                <a th:href="@{/users(page=${users.number-1})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="pageNumber : ${#numbers.sequence(0, users.totalPages-1)}"
+                th:class="${pageNumber == users.number} ? 'active' : ''">
+                <a th:href="@{/users(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+            </li>
+            <li th:if="${users.hasNext()}">
+                <a th:href="@{/users(page=${users.number+1})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>
